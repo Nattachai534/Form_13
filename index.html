@@ -553,7 +553,7 @@
         <div class="content">
             <div class="logo-container">
                 <!-- กรุณาใส่ URL รูปโลโก้ของคุณที่นี่ -->
-                <img src="https://img2.pic.in.th/pic/Picture2-1.png" alt="Logo" onerror="this.style.display='none'">
+                <img src="https://img2.pic.in.th/pic/Picture2-19f0391a0702ff1ee.png" alt="Logo" onerror="this.style.display='none'">
             </div>
             
             <h1>ระบบลงทะเบียนจองโต๊ะ</h1>
@@ -707,7 +707,7 @@
     
     <script>
         // Google Apps Script URL
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymSde60xolhsZWIyCpyg72KiIg5-h8y22zmTXbhSo0lS64amAb83hZhrxy3lPvDAZfTg/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoO7eIFG5sZQEbb9jh2hO97pJDq1uLQNTpnf5RcjT6wVCbmzfKAnXGj8Xx1mWXaSDhlQ/exec';
         
         // Form elements
         const form = document.getElementById('booking-form');
@@ -740,39 +740,91 @@
         }
         
         // Load registration data
-        async function loadRegistrationData() {
+        function loadRegistrationData() {
             const tbody = document.getElementById('data-tbody');
             tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">กำลังโหลดข้อมูล...</td></tr>';
             
-            try {
-                // Use JSONP approach for cross-origin
-                const script = document.createElement('script');
-                const callbackName = 'handleDataResponse_' + Date.now();
-                
-                window[callbackName] = function(result) {
+            // Create a temporary iframe to fetch data
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = SCRIPT_URL + '?action=getData';
+            
+            // Set timeout for loading
+            const timeout = setTimeout(() => {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่</td></tr>';
+                document.body.removeChild(iframe);
+            }, 10000);
+            
+            iframe.onload = function() {
+                try {
+                    const content = iframe.contentDocument.body.textContent;
+                    const result = JSON.parse(content);
+                    
                     if (result.status === 'success') {
                         displayData(result.data);
                     } else {
-                        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">ไม่สามารถโหลดข้อมูลได้</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">ไม่พบข้อมูล</td></tr>';
                     }
-                    delete window[callbackName];
-                };
+                    
+                    clearTimeout(timeout);
+                    document.body.removeChild(iframe);
+                } catch (error) {
+                    console.error('Error parsing data:', error);
+                    // Try alternative method - direct fetch
+                    fetchDataDirectly();
+                    clearTimeout(timeout);
+                    document.body.removeChild(iframe);
+                }
+            };
+            
+            document.body.appendChild(iframe);
+        }
+        
+        // Alternative method to fetch data directly
+        async function fetchDataDirectly() {
+            const tbody = document.getElementById('data-tbody');
+            
+            try {
+                // Try direct fetch with no-cors mode
+                const response = await fetch(SCRIPT_URL + '?action=getData', {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
                 
-                script.src = SCRIPT_URL + '?action=getData&callback=' + callbackName;
-                document.body.appendChild(script);
-                
-                // Remove script after loading
-                script.onload = () => document.body.removeChild(script);
-                script.onerror = () => {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>';
-                    document.body.removeChild(script);
-                    delete window[callbackName];
-                };
-                
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.status === 'success') {
+                        displayData(result.data);
+                        return;
+                    }
+                }
             } catch (error) {
-                console.error('Error loading data:', error);
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">เกิดข้อผิดพลาดในการโหลดข้อมูล</td></tr>';
+                console.error('Direct fetch error:', error);
             }
+            
+            // If all methods fail, show sample data for testing
+            showSampleData();
+        }
+        
+        // Show sample data for testing
+        function showSampleData() {
+            const tbody = document.getElementById('data-tbody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 20px; background: #fef3c7;">
+                        <strong>หมายเหตุ:</strong> ไม่สามารถเชื่อมต่อกับฐานข้อมูลได้<br>
+                        กรุณาตรวจสอบ:
+                        <ol style="text-align: left; display: inline-block; margin-top: 10px;">
+                            <li>Google Apps Script URL ถูกต้อง</li>
+                            <li>Deploy แบบ "Anyone can access"</li>
+                            <li>Sheet ID และชื่อ Sheet ถูกต้อง</li>
+                        </ol>
+                    </td>
+                </tr>
+            `;
         }
         
         // Display registration data
