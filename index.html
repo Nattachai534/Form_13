@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -684,7 +685,7 @@
                         <thead>
                             <tr>
                                 <th>วันที่</th>
-                                <th>ชื่อ-นามสกุล</th>
+                                <th>ชื่อ-นามสกุล</th><th>เบอร์โทร</th>
                                 <th>หน่วยงาน</th>
                                 <th>จำนวนโต๊ะ</th>
                                 <th>สถานะ</th>
@@ -852,7 +853,7 @@
             tbody.innerHTML = data.map(item => `
                 <tr>
                     <td>${formatDate(item.timestamp)}</td>
-                    <td>${item.fullName}</td>
+                    <td>${item.fullName}</td><td>${item.phone || '-'}</td>
                     <td>${item.department}</td>
                     <td>${item.tableCount}</td>
                     <td>
