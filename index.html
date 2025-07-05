@@ -11,7 +11,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+function toggleMenu() {
+    const menu = document.getElementById("hamburgerMenu");
+    const icon = document.querySelector(".hamburger-icon");
+    menu.classList.toggle("show");
+    icon.classList.toggle("active");
+}
+
+</script>
     
     <style>
         * {
@@ -61,18 +69,31 @@
         }
         
         .nav-button {
-            padding: 12px 20px;
-            background: white;
-            border: 2px solid #4f46e5;
-            border-radius: 10px;
-            color: #4f46e5;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 16px;
-            text-align: center;
-        }
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 16px;
+    text-align: left;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #5a67d8, #805ad5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button.active {
+    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.4);
+}
         
         .nav-button.active {
             background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
@@ -503,8 +524,31 @@
             }
             
             .nav-button {
-                flex: 1;
-            }
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 16px;
+    text-align: left;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #5a67d8, #805ad5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button.active {
+    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.4);
+}
         }
         
         @media (max-width: 600px) {
@@ -536,25 +580,140 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-button {
+        font-size: 15px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    .main-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 20px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .data-table table {
+        min-width: 100%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+}
+
+
+.hamburger-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.hamburger-icon {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4f46e5;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.hamburger-menu.show {
+    display: flex;
+}
+
+
+.hamburger-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.hamburger-icon div {
+    height: 4px;
+    background-color: #4f46e5;
+    border-radius: 2px;
+    transition: 0.4s;
+}
+
+.hamburger-icon.active .bar1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger-icon.active .bar2 {
+    opacity: 0;
+}
+
+.hamburger-icon.active .bar3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+</style>
 </head>
 <body>
     <div class="main-container">
         <!-- Left Sidebar -->
-        <div class="sidebar">
-            <h2>เมนู</h2>
-            <div class="nav-menu">
-                <button class="nav-button active" onclick="showSection('register', this)">ลงทะเบียน</button>
-                <button class="nav-button" onclick="showSection('data', this)">ข้อมูลผู้ลงทะเบียน</button>
-            </div>
+        
+<div class="hamburger-container">
+    
+<div class="hamburger-icon" onclick="toggleMenu()">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+</div>
+
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <button class="nav-button" onclick="showSection('register', this)">ลงทะเบียน</button>
+        <button class="nav-button" onclick="showSection('data', this)">ข้อมูลผู้ลงทะเบียน</button>
+        <button class="nav-button" onclick="window.open('https://docs.google.com/spreadsheets/d/1FZePNNYLfiq92D447gMIhaIE_25_hgIU/edit?usp=sharing', '_blank')">📋 รายชื่อผู้เกษียณอายุราชการ</button>
+        <button class="nav-button" onclick="window.open('https://img5.pic.in.th/file/secure-sv1/--13-29.7-x-21-..png', '_blank')">📩 บัตรเชิญ</button>
+    </div>
+</div>
+
         </div>
         
         <!-- Main Content -->
         <div class="content">
-            <div class="logo-container">
-                <!-- กรุณาใส่ URL รูปโลโก้ของคุณที่นี่ -->
-                <img src="https://img2.pic.in.th/pic/Picture2-19f0391a0702ff1ee.png" alt="Logo" onerror="this.style.display='none'">
-            </div>
+            
+<div class="logo-container">
+    <img src="https://img2.pic.in.th/pic/Picture2-19f0391a0702ff1ee.png" alt="Logo" style="max-width: 100%; height: auto; max-height: 100px;" onerror="this.style.display='none'">
+</div>
+
             
             <h1>ระบบลงทะเบียนจองโต๊ะ</h1>
             <p class="subtitle">งานแสดงมุทิตาจิตแด่ผู้เกษียณอายุราชการ เขต 13 ประจำปี 2568</p>
@@ -578,13 +737,16 @@
                         📋 คัดลอกเลขบัญชี
                     </button>
                 </div>
+
+
+
                 
                 <form id="booking-form">
                     <div class="form-group">
                         <label for="fullName">
                             คำนำหน้า/(ยศ) ชื่อ–นามสกุล (ผู้จอง) <span class="required">*</span>
                         </label>
-                        <input type="text" id="fullName" name="fullName" placeholder="กรอก คำนำหน้า/(ยศ) ชื่อ–นามสกุล (ผู้จอง)" required>
+                        <input type="text" id="fullName" name="fullName" required>
                         <div class="error-message" id="fullName-error"></div>
                     </div>
                     
@@ -598,9 +760,9 @@
                     
                     <div class="form-group">
                         <label for="department">
-                            ชื่อโรงพยาบาล <span class="required">*</span>
+                            หน่วยงาน <span class="required">*</span>
                         </label>
-                        <input type="text" id="department" name="department" placeholder="กรอกชื่อโรงพยาบาล" required>
+                        <input type="text" id="department" name="department" required>
                         <div class="error-message" id="department-error"></div>
                     </div>
                     
@@ -707,7 +869,7 @@
     
     <script>
         // Google Apps Script URL
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBGLPRwm5dlN_S7pQgo47quhmAEo4fyLfiHVMP_jibj8mWMW8JmuC8_FpCGYMqzPujNw/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVuq6M5OQpLTaOVw-Ui6yPpSJJniaDu8Zj8t7xDdRLO3rW76vXV-bqzxxmIR2-a4AL/exec';
         
         // Form elements
         const form = document.getElementById('booking-form');
@@ -1121,6 +1283,14 @@
             submitButton.textContent = 'ลงทะเบียน';
             loading.style.display = 'none';
         }
-    </script>
+    
+function toggleMenu() {
+    const menu = document.getElementById("hamburgerMenu");
+    const icon = document.querySelector(".hamburger-icon");
+    menu.classList.toggle("show");
+    icon.classList.toggle("active");
+}
+
+</script>
 </body>
 </html> 
