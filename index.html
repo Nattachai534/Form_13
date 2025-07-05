@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบลงทะเบียนจองโต๊ะ - งานแสดงมุทิตาจิต</title>
+    <title>ระบบลงทะเบียนจองโต๊ะ - งานเกษียณอายุราชการ เขตสุขภาพที่ 13</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -716,7 +716,7 @@ function toggleMenu() {
 
             
             <h1>ระบบลงทะเบียนจองโต๊ะ</h1>
-            <p class="subtitle">งานแสดงมุทิตาจิตแด่ผู้เกษียณอายุราชการ เขต 13 ประจำปี 2568</p>
+            <p class="subtitle">งานแสดงมุทิตาจิตแด่ผู้เกษียณอายุราชการ เขตสุขภาพที่ 13 ประจำปี 2568</p>
             
             <!-- Registration Section -->
             <div id="register-section" class="content-section active">
@@ -746,7 +746,7 @@ function toggleMenu() {
                         <label for="fullName">
                             คำนำหน้า/(ยศ) ชื่อ–นามสกุล (ผู้จอง) <span class="required">*</span>
                         </label>
-                        <input type="text" id="fullName" name="fullName" required>
+                        <input type="text" id="fullName" name="fullName" placeholder="กรอก คำนำหน้า/(ยศ) ชื่อ–นามสกุล (ผู้จอง)" required>
                         <div class="error-message" id="fullName-error"></div>
                     </div>
                     
@@ -762,7 +762,7 @@ function toggleMenu() {
                         <label for="department">
                             หน่วยงาน <span class="required">*</span>
                         </label>
-                        <input type="text" id="department" name="department" required>
+                        <input type="text" id="department" name="department" placeholder="กรอก ชื่อโรงพยาบาล" required>
                         <div class="error-message" id="department-error"></div>
                     </div>
                     
@@ -777,6 +777,11 @@ function toggleMenu() {
                             <option value="3 โต๊ะ">3 โต๊ะ</option>
                             <option value="4 โต๊ะ">4 โต๊ะ</option>
                             <option value="5 โต๊ะ">5 โต๊ะ</option>
+                            <option value="1 โต๊ะ">6 โต๊ะ</option>
+                            <option value="2 โต๊ะ">7 โต๊ะ</option>
+                            <option value="3 โต๊ะ">8 โต๊ะ</option>
+                            <option value="4 โต๊ะ">9 โต๊ะ</option>
+                            <option value="5 โต๊ะ">10 โต๊ะ</option>
                         </select>
                         <div class="error-message" id="tableCount-error"></div>
                     </div>
